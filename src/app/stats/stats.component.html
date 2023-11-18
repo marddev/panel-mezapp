@@ -1,0 +1,159 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+  <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{'Get Stats' | translate}} </h5>
+      </div>
+      <div class="card-body reset-table p-t-0">
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label>{{'Please select restaurants' | translate}}</label>
+            <select name="select" [(ngModel)]="restId" class="form-control">
+              <option *ngFor="let item of rest" [value]="item.id">{{item.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <label>{{'From Date' | translate}} </label>
+            <input type="date" [(ngModel)]="from" class="form-control"
+              [placeholder]="('Expire Date' | translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'To Date' | translate}} </label>
+            <input type="date" [(ngModel)]="to" class="form-control"
+              [placeholder]="('Expire Date' | translate) || '&nbsp;'">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <button class="btn btn-danger btn-round" (click)="getStats()">{{'Get Stats' | translate}}</button>
+            <button style="margin-left: 20px;" [useExistingCss]="true" [printTitle]="getName()"
+              printSectionId="print-section" ngxPrint *ngIf="restId && from && to && restOrder?.length"
+              class="btn btn-primary"><i class="icofont icofont-printer"></i>{{'Print' | translate}}</button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<h2  style="text-align: center; display: none;" *ngIf="restId && from && to && !restOrder?.length">{{'No Orders Found' | translate}}
+</h2>
+<div class="row" id="print-section" *ngIf="restId && from && to && restOrder?.length">
+  <div class="col-md-12">
+    <div class="card" style="padding: 20px;">
+      <h3 style="text-align: center;color: #7ec6aa;">Goby Aplicación </h3>
+      <p style="text-align: center;color: #ED7669;">{{getDate(from)}} {{'to' | translate}} {{getDate(to)}}</p>
+      
+      <p style="text-align: left; font-weight: bold;margin: 0px;color: #7EC6AA;">{{restOrder[0].vid.name}}</p>
+      <p style="text-align: left; font-weight: bold;color: #7EC6AA;">{{today()}}</p>
+      <div class="table-responsive">
+        
+        <table class="table" id="table_report">
+          <tr  class="data-hidden" style="display: none;">
+            <th>Restaurante:</th>
+            <td>{{restOrder[0].vid.name}}</td>
+          </tr>
+          <tr  class="data-hidden" style="display: none;">
+            <th>Fecha:</th>
+            <td>{{today()}}</td>
+          </tr>
+          <thead>
+            <tr class="text-uppercase" style="color:#7ec6aa ;">
+              <th>Id</th>
+              <th>{{'Date of Ordered' | translate}}</th>
+              <th>{{'User Name' | translate}}</th>
+              <th>{{'Delivery Name' | translate}}</th>
+              <th>{{'Deliver cost' | translate}}</th>
+              <th>{{'Order cost' | translate}}</th>
+              <th>{{'Platform Commission' | translate}}</th>
+              <th>{{'Total Parcial' | translate}}</th>
+              <th>{{'Applied platform commission' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of restOrder" style="background-color: #F5F8FA;">
+              <td><a href="/admin-orderdetails?id={{item.orderId}}">{{item.orderId}}</a></td>
+              <td>{{item.time}}</td>
+              <td> {{item.uid.fullname}}</td>
+              <td>{{item.dId.fullname}}</td>
+              <td>$25.00</td>
+              <td>{{getCurrency()}}{{item.total}}</td>
+              <td>{{getCurrency()}}{{getCommisions(item.total)}}</td>
+              <td>{{getCurrency()}}{{getParcialCost(item.total,getCommisions(item.total))}}</td>
+              <td>20%</td>
+            </tr>
+            <tr class="data-hidden" style="display: none;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <th> {{'Total' | translate}}</th>
+              <td>{{getCurrency()}} {{totalAmount}}</td>
+            </tr>
+            <tr class="data-hidden" style="display: none;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <th>{{'Platform Commission' | translate}}</th>
+              <td>{{commisionAmount}}</td>
+            </tr>
+            <tr class="data-hidden" style="display: none;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <th> {{'Amount Pay' | translate}}</th>
+              <td>{{getCurrency()}} {{toPay}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" style="padding: 20px;">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-4">
+          <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;;">
+            {{'Total' | translate}}</p>
+          <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;;">
+            {{'Platform Commission' | translate}}
+          </p>
+          <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;;">
+            {{'Amount Pay' | translate}}
+          </p>
+        </div>
+        <div class="col-sm-2">
+          <p style="color: black !important;margin: 0px !important;text-align: right;">{{getCurrency()}} {{totalAmount}}
+          </p>
+          <p style="color: black !important; margin: 0px !important;text-align: right;">{{getCurrency()}}
+            {{commisionAmount}}
+          </p>
+          <p style="color: black !important;margin: 0px !important;text-align: right;">{{getCurrency()}} {{toPay}}</p>
+        </div>
+      </div>
+
+      <p style="display: none;" style="font-size: .8rem;color: gray;">
+        {{'The invoice amount of' | translate}} {{getCurrency()}} {{toPay}} {{'will automatically be transferred to your account around five working days. We collect via the our customers. On behalf
+                of Foodies Your payments are processed by Stichting Soon. You can find our company name and contact informations in the
+                description on the statement' | translate}}.</p>
+                <br>
+                <button (click)="ExportToExcel()" class="btn btn-primary">{{'Import to excel'| translate}}</button>
+    </div>
+    
+  </div>
+</div>
+
+<ng2-toasty></ng2-toasty>

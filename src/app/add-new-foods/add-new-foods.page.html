@@ -1,0 +1,97 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2"><h5>{{'Food' | translate}}</h5></div>
+          <div class="col-md-8"></div>
+          <div class="col-md-2"><button  *ngIf="!new" (click)="deleteFood()" style="margin: 3px;"  class="btn btn-danger btn-round">{{'Delete' | translate}}</button></div>
+        </div>
+        
+        <hr>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Category' | translate}}: </label></div>
+          <div class="col-md-4">
+            <select class="form-control" [(ngModel)]="cid">
+              <option *ngFor="let item of categories" [value]="item.id">{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Food Name' | translate}}: </label></div>
+          <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="name" type="text" [placeholder]="('Food Name' | translate )" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Price' | translate}}: </label></div>
+          <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="price" type="text" [placeholder]="('Price' | translate )" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Real Price' | translate}}: </label></div>
+          <div class="col-md-4">
+            <input class="form-control" [(ngModel)]="gobyprice" type="text"
+              [placeholder]="('Real Price' | translate )" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Veg' | translate}}: </label></div>
+          <div class="col-md-4">
+            <select class="form-control" [(ngModel)]="veg">
+              <option value="true">SI</option>
+              <option value="false">NO</option>
+            </select>
+
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Short descriptions' | translate}}: </label></div>
+          <div class="col-md-4">
+            <textarea class="form-control" [(ngModel)]="descriptions" rows="5"
+              [placeholder]="('Short descriptions' | translate )">
+        </textarea>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-2"><label>{{'Status' | translate}}: </label></div>
+          <div class="col-md-4">
+            <select class="form-control" [(ngModel)]="status">
+              <option value="true">{{'Available' | translate}}</option>
+              <option value="false">{{'Hide' | translate}}</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">{{'Upload cover image here' | translate}}</label>
+          <div class="col-sm-4">
+            <input (change)="preview_banner($event.target.files)" type="file" class="form-control">
+          </div>
+          <div class="col-sm-4">
+            <img [src]="coverImage" alt="" style="height: 100px;width: 100px;float: right;"
+              onError="this.src='assets/icon.png'">
+          </div>
+        </div>
+        <br>
+        <div class="form-group row">
+          <div class="col-sm-12">
+              <button class="btn btn-danger btn-round" (click)="create()"
+                  *ngIf="new">{{'Add New Food' | translate}}
+              </button>
+              <button class="btn btn-danger btn-round" (click)="update()" *ngIf="!new">
+                {{'Update Food' | translate}} </button>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

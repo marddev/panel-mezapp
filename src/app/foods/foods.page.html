@@ -1,0 +1,37 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-body">
+        <h5>{{'Food' | translate}}</h5>
+        <button (click)="showPanelCreated()" style="margin: 3px;"  class="btn btn-primary btn-round">{{'Add New Food' | translate}}</button>
+        <div>
+          <div class="mainContent">
+            <h2 class="text-center" *ngIf="!categories?.length">{{'No Foods Found' | translate}}</h2>
+            
+            <div *ngFor="let item of categories">
+              <label class="head_lbl">{{item.name}}</label>
+              
+              <div *ngFor="let food of foods;">
+                <span *ngIf="item.id == food.cid.id" class="card_div" (click)="foodsInfo(food)">
+                  <!-- <div class="back_image" [style.backgroundImage]="'url('+food.cover+')'"></div> -->
+                  <img [src]="food.cover" class="back_image" alt="">
+                  <div class="content_div">
+                    <label class="title">{{food.name}}</label><br>
+                    <label class="small">{{food.desc}}</label><br>
+                    <label *ngIf="food.veg" class="veg">Veg</label>
+                    <label *ngIf="!food.veg" class="nonVeg">Non Veg</label><br>
+        
+                    <label class="title">{{getCurrency()}} {{food.price}}</label>
+                  </div>
+                </span>
+              </div>
+        
+            </div>
+        
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

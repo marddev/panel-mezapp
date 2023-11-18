@@ -1,0 +1,40 @@
+
+
+
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <h5>{{'Categories' | translate}}</h5>
+      <button (click)="showPanelCreated()" style="margin: 3px;"  class="btn btn-primary btn-round">{{'Add New Category' | translate}}</button>
+    </div>
+    <div class="card-body reset-table p-t-0">
+      <div style="display: none;" id="panelCreate">
+        <h4 >{{'New Category' | translate}}</h4>
+        <div class="row">
+          <div  class="col-sm-4">
+            <input  class="form-control "  [(ngModel)]="name"  placeholder="Category" type="text" >
+          </div>
+          <div  class="col-sm-4" *ngIf="flag==1">
+            <button (click)="create()"  class="btn btn-primary btn-round">{{'Save' | translate}}</button>
+          </div>
+          <div  class="col-sm-4" *ngIf="flag==2">
+            <button (click)="edit()"  class="btn btn-primary btn-round">{{'Update' | translate}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="ion-padding">
+        <div class="">
+          <h2 class="ion-text-center" *ngIf="!dummy?.length && !categories?.length">{{'No Category Found' | translate}}</h2>
+          
+          <div lines="none" *ngFor="let item of categories;" >
+            <label style="width: 70%;">{{item.name}}</label>
+            <!-- <ion-icon slot="end" name="pencil-sharp"></ion-icon> -->
+            <button (click)="showPanelEdit(item)" style="margin: 3px;"  class="btn btn-primary btn-round">{{'Edit' | translate}}</button>
+            <button (click)="delete(item)" style="margin: 3px;"    class="btn btn-danger btn-round">{{'Delete' | translate}}</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    </div>
