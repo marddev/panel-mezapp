@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/2fiesta",
+    "public": "dist/mezapp",
     "ignore": [
       "firebase.json",
       "**/.*",
