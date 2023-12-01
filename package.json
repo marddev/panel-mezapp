@@ -42,7 +42,7 @@
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.5.13",
     "lodash": "^4.17.20",
-    "moment": "^2.29.0",
+    "moment": "^2.29.4",
     "ng-click-outside": "^3.2.0",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng2-toasty": "^4.0.3",
