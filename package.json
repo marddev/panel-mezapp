@@ -59,7 +59,7 @@
     "sweetalert2": "^9.17.2",
     "ti-icons": "^0.1.2",
     "tslib": "^1.10.0",
-    "xlsx": "^0.16.7",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
